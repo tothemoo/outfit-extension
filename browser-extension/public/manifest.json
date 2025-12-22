@@ -1,0 +1,9 @@
+{
+    "manifest_version":3,
+    "name":"Outfit Grabber",
+    "version":"1.0",
+    "description":"Drag and drop your clothes",
+    "action":{
+        "default_popup":"index.html"
+    }
+}
