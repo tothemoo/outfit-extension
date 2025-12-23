@@ -45,6 +45,8 @@ const HeroSection = () => {
           Outfit Grabber
         </Typography>
 
+        {/* Paste Link */}
+
         {/* table section */}
         <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
           <Table size="small" stickyHeader>
