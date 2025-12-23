@@ -14,11 +14,11 @@ import {
   TableCell,
   Paper,
   Typography,
+  TextField,
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
-import AddLinkIcon from "@mui/icons-material/AddLink";
-import FiberNewIcon from "@mui/icons-material/FiberNew";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
@@ -59,8 +59,8 @@ const HeroSection = () => {
             <Box sx={{ flexGrow: 1 }} />
 
             <Button variant="outlined" color="white" size="small">
-              <Typography sx={{ fontSize: "small" }}>New</Typography>{" "}
-              <AddIcon sx={{ fontSize: "medium" }} />
+              <Typography sx={{ fontSize: "small" }}>Refresh</Typography>{" "}
+              <RefreshIcon sx={{ fontSize: "medium" }} />
             </Button>
           </Toolbar>
         </AppBar>
@@ -68,37 +68,14 @@ const HeroSection = () => {
         <Box sx={{ p: 2 }}>
           <Stack spacing={2}>
             {/* link grabber */}
-            <Box
-              sx={{
-                width: "100%",
-                minHeight: 100,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Paper
-                elevation={3}
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  minHeight: 100,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-
-                  borderRadius: 2,
-                }}
-              >
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography sx={{ color: "grey" }}>Drop your Link</Typography>
-                  <AddLinkIcon sx={{ color: "grey" }} />
-                </Stack>
-              </Paper>
-            </Box>
-
-            {/* add Button */}
-            <Box display="flex">
+            <Box display="flex" alignItems="center" gap={1}>
+              <TextField
+                id="outlined-basic"
+                label="Paste your link here"
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
               <Button
                 variant="contained"
                 endIcon={<AddIcon />}
