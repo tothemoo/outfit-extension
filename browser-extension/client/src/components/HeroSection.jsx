@@ -15,19 +15,16 @@ import {
   TableCell,
   Paper,
   Typography,
+  TextField,
 } from "@mui/material";
 
-import AddIcon from '@mui/icons-material/Add';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddIcon from "@mui/icons-material/Add";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 
 const HeroSection = () => {
-
-
-
-
   //table style
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -49,52 +46,44 @@ const HeroSection = () => {
     },
   }));
 
-
-
   return (
     <div className="section-1">
       <Box sx={{ width: 360, minHeight: 480, boxShadow: 10 }}>
-
-
-
         {/* header section */}
-        <AppBar position="sticky" elevation={1} >
+        <AppBar position="sticky" elevation={1}>
           <Toolbar variant="dense">
-
-            <Typography
-              variant="subtitle1"
-              sx={{ fontWeight: 500 }}
-            >
+            <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
               Outfit Grabber
             </Typography>
 
             <Box sx={{ flexGrow: 1 }} />
 
             <Button variant="outlined" color="white" size="small">
-              <Typography sx={{ fontSize: "small" }}>New</Typography> <AddIcon sx={{ fontSize: "medium" }} />
+              <Typography sx={{ fontSize: "small" }}>Refresh</Typography>{" "}
+              <RefreshIcon sx={{ fontSize: "medium" }} />
             </Button>
           </Toolbar>
         </AppBar>
 
-
         <Box sx={{ p: 2 }}>
-
           <Stack spacing={2}>
-
             {/* link grabber */}
-            <Stack direction="row" spacing={1} alignItems="center">
+            <Box display="flex" alignItems="center" gap={1}>
               <TextField
-                label="Add your link"
+                id="outlined-basic"
+                label="Paste your link here"
                 variant="outlined"
                 size="small"
                 fullWidth
               />
-
-              <IconButton size="small" color="primary">
-                <AddShoppingCartIcon fontSize="small" />
-              </IconButton>
-
-            </Stack>
+              <Button
+                variant="contained"
+                endIcon={<AddIcon />}
+                sx={{ color: "white" }}
+              >
+                Add
+              </Button>
+            </Box>
 
             {/* table section */}
             <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
@@ -120,11 +109,7 @@ const HeroSection = () => {
             </TableContainer>
           </Stack>
         </Box>
-
-
-
       </Box>
-
     </div>
   );
 };
