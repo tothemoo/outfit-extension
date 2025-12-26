@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  TextField,
   IconButton,
   AppBar,
   Toolbar,
@@ -17,8 +18,7 @@ import {
 } from "@mui/material";
 
 import AddIcon from '@mui/icons-material/Add';
-import AddLinkIcon from '@mui/icons-material/AddLink';
-import FiberNewIcon from '@mui/icons-material/FiberNew';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
@@ -68,7 +68,6 @@ const HeroSection = () => {
               Outfit Grabber
             </Typography>
 
-            {/* pushes anything after this to the right */}
             <Box sx={{ flexGrow: 1 }} />
 
             <Button variant="outlined" color="white" size="small">
@@ -83,36 +82,19 @@ const HeroSection = () => {
           <Stack spacing={2}>
 
             {/* link grabber */}
-            <Box sx={{
-              width: "100%",
-              minHeight: 100,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
-              <Paper elevation={3} sx={{
-                width: "100%",
-                height: "100%",
-                minHeight: 100,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+            <Stack direction="row" spacing={1} alignItems="center">
+              <TextField
+                label="Add your link"
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
 
-                borderRadius: 2,
-              }} >
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography sx={{ color: "grey" }}>Drop your Link</Typography>
-                  <AddLinkIcon sx={{ color: "grey" }} />
-                </Stack>
-              </Paper>
+              <IconButton size="small" color="primary">
+                <AddShoppingCartIcon fontSize="small" />
+              </IconButton>
 
-            </Box>
-
-            {/* add Button */}
-            <Box display="flex" >
-              <Button variant="contained" endIcon={<AddIcon />} sx={{ color: "white" }}>Add</Button>
-            </Box>
-
+            </Stack>
 
             {/* table section */}
             <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
