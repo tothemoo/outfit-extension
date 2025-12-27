@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import {
   TextField,
   IconButton,
@@ -15,36 +16,30 @@ import {
   TableCell,
   Paper,
   Typography,
-  TextField,
+
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
-import { styled } from "@mui/material/styles";
-import { tableCellClasses } from "@mui/material/TableCell";
+
+
+//components
+import LinkSection from "./LinkSection";
+import CreateForm from "./CreateForm";
+import HistorySection from "./HistorySection";
+import CardSection from "./CardSection";
+
 
 const HeroSection = () => {
-  //table style
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
+
+  //states
+  const [activeState, setActiveState] = useState(null)
+
+
+
+
 
   return (
     <div className="section-1">
@@ -52,63 +47,103 @@ const HeroSection = () => {
         {/* header section */}
         <AppBar position="sticky" elevation={1}>
           <Toolbar variant="dense">
-            <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-              Outfit Grabber
-            </Typography>
+
+            <img src="/assets/logo2.png" width="40px" alt="logo" />
 
             <Box sx={{ flexGrow: 1 }} />
 
-            <Button variant="outlined" color="white" size="small">
-              <Typography sx={{ fontSize: "small" }}>Refresh</Typography>{" "}
-              <RefreshIcon sx={{ fontSize: "medium" }} />
-            </Button>
+            <Box display="flex" gap={1}>
+
+              <Button variant="outlined" color="white" size="small">
+                <Typography sx={{ fontSize: "small" }}>Refresh</Typography>{" "}
+                <RefreshIcon sx={{ fontSize: "medium" }} />
+              </Button>
+
+            </Box>
+
           </Toolbar>
         </AppBar>
 
         <Box sx={{ p: 2 }}>
-          <Stack spacing={2}>
-            {/* link grabber */}
-            <Box display="flex" alignItems="center" gap={1}>
-              <TextField
-                id="outlined-basic"
-                label="Paste your link here"
-                variant="outlined"
-                size="small"
-                fullWidth
-              />
+          <AppBar position="static" elevation={2} sx={{
+            borderRadius: "50px",
+            height: "40px",
+            justifyContent: "center",
+
+          }}>
+            <Toolbar sx={{
+              minHeight: "40px !important",
+              padding: "0 !important",
+              display: "flex",
+              width: "100%",
+            }}
+            >
               <Button
-                variant="contained"
-                endIcon={<AddIcon />}
-                sx={{ color: "white" }}
+                sx={{
+                  flex: 1, borderRight: "1px solid rgba(255,255,255,0.3)",
+                  transition: "background-color 0.25s ease",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.5)",
+                  },
+                }}
+                onClick={() => setActiveState("create")}
               >
-                Add
+
+                <Typography color="white" sx={{ fontSize: "12px" }}>Create</Typography>
               </Button>
-            </Box>
 
-            {/* table section */}
-            <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
-              <Table size="small" stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell>Sl no.</StyledTableCell>
-                    <StyledTableCell>Item</StyledTableCell>
-                    <StyledTableCell>Qty</StyledTableCell>
-                    <StyledTableCell>Price</StyledTableCell>
-                  </TableRow>
-                </TableHead>
+              <Button
+                sx={{
+                  flex: 1,
+                  borderRight: "1px solid rgba(255,255,255,0.3)",
+                  transition: "background-color 0.25s ease",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.5)",
+                  },
+                }}
+                onClick={() => setActiveState("link")}
+              >
+                <Typography color="white" sx={{ fontSize: "12px" }}>Link</Typography>
+              </Button>
 
-                <TableBody>
-                  <StyledTableRow>
-                    <StyledTableCell>1</StyledTableCell>
-                    <StyledTableCell>Zipper Jacket</StyledTableCell>
-                    <StyledTableCell>2</StyledTableCell>
-                    <StyledTableCell>200</StyledTableCell>
-                  </StyledTableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Stack>
+              <Button sx={{
+                flex: 1, transition: "background-color 0.25s ease",
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.5)",
+                },
+              }}
+                onClick={() => setActiveState("history")}
+              >
+                <Typography color="white" sx={{ fontSize: "12px" }}>History</Typography>
+              </Button>
+            </Toolbar>
+          </AppBar>
         </Box>
+
+        {/* conditionals */}
+
+        {/* Create */}
+        {activeState == "create" && (
+          <CreateForm />
+        )}
+
+
+        {/* Link paster  */}
+
+        {activeState == "link" && (
+          <LinkSection />
+        )}
+
+        {/* History */}
+        {activeState == "history" && (
+          <HistorySection />
+        )}
+
+
+        {/* beautify */}
+        {!activeState && <CardSection />}
+
+
       </Box>
     </div>
   );

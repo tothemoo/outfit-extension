@@ -8,10 +8,10 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#a575d5ff",
+      main: "#000000ff",
     },
     secondary: {
-      main: "#000000ff",
+      main: "#ffffffff",
     },
   },
   typography: {
