@@ -79,7 +79,7 @@ const CardSection = () => {
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="div">Preface</Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                Create your outfit and never lose track of where you last saw it. Outfit Grabber is your one stop solution to keep the later trends and your wardrobe in check.
+                                Create your outfit and never lose track of where you last saw it. Outfit Grabber is your one stop solution to keep the latest trends, and your wardrobe in check.
                             </Typography>
                         </CardContent>
                     </CardActionArea>

@@ -36,6 +36,7 @@ const HeroSection = () => {
 
   //states
   const [activeState, setActiveState] = useState(null)
+  const [activeStateCard, setActiveStateCard] = useState("helloWorld")
 
 
 
@@ -43,26 +44,27 @@ const HeroSection = () => {
 
   return (
     <div className="section-1">
-      <Box sx={{ width: 360, minHeight: 480, boxShadow: 10 }}>
+      <Box sx={{ width: 360, minHeight: 480, boxShadow: "10" }}>
         {/* header section */}
         <AppBar position="sticky" elevation={1}>
           <Toolbar variant="dense">
 
-            <img src="/assets/logo2.png" width="40px" alt="logo" />
+            <img src="/assets/logo2.png" width="40px" alt="logo" onClick={() => { setActiveState(null), setActiveStateCard("helloWorld") }} />
 
-            <Box sx={{ flexGrow: 1 }} />
+            {/* <Box sx={{ flexGrow: 1 }} /> */}
 
-            <Box display="flex" gap={1}>
-
-              <Button variant="outlined" color="white" size="small">
+            {/* <Box display="flex" gap={1}>
+              
+              <Button variant="outlined" color="white" size="small" onClick={handleReset}>
                 <Typography sx={{ fontSize: "small" }}>Refresh</Typography>{" "}
                 <RefreshIcon sx={{ fontSize: "medium" }} />
               </Button>
 
-            </Box>
+            </Box> */}
 
           </Toolbar>
         </AppBar>
+
 
         <Box sx={{ p: 2 }}>
           <AppBar position="static" elevation={2} sx={{
@@ -71,6 +73,7 @@ const HeroSection = () => {
             justifyContent: "center",
 
           }}>
+
             <Toolbar sx={{
               minHeight: "40px !important",
               padding: "0 !important",
@@ -141,7 +144,7 @@ const HeroSection = () => {
 
 
         {/* beautify */}
-        {!activeState && <CardSection />}
+        {!activeState && activeStateCard == "helloWorld" && <CardSection />}
 
 
       </Box>

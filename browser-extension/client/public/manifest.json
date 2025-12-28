@@ -1,9 +1,17 @@
 {
-    "manifest_version":3,
-    "name":"Outfit Grabber",
-    "version":"1.0",
-    "description":"Drag and drop your clothes",
-    "action":{
-        "default_popup":"index.html"
-    }
+    "manifest_version": 3,
+    "name": "Outfit Grabber",
+    "version": "1.0",
+    "description": "Drag and drop your clothes",
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "/assets/logo2.png",
+            "24": "/assets/logo2.png",
+            "32": "/assets/logo2.png"
+        }
+    },
+    "permissions": [
+        "storage"
+    ]
 }

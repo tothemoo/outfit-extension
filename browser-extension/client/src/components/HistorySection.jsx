@@ -21,32 +21,60 @@ import {
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+
+
+//db
+import { db } from "../../db";
+import { useLiveQuery } from "dexie-react-hooks";
+
 const HistorySection = () => {
+
+    //db
+    const onSubmit = async (data) => {
+        try {
+            await db.outfits.add({
+                itemName: data.itemName,
+                quantity: data.quantity,
+                cost: data.cost,
+                link: data.link || "",
+                image: imageFile,
+                createdAt: new Date(),
+            })
+
+            console.log("Data Saved:", data)
+            reset()
+            setImageFile(null)
+            setImage(null)
+            setActiveState("table");
+        }
+        catch {
+
+        }
+    }
+
+    const outfits = useLiveQuery(() => db.outfits.orderBy("createdAt").reverse().toArray(), [])
 
     //state
     const containerRef = useRef(null)
 
+    const handleDelete = async (id) => {
+        try {
+            await db.outfits.delete(id);
+        }
+        catch (err) {
+            console.error("Cannot be deleted:", err)
+        }
+    }
 
-    //table style
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
-        [`&.${tableCellClasses.head}`]: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
-        },
-        [`&.${tableCellClasses.body}`]: {
-            fontSize: 14,
-        },
-    }));
-
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        "&:nth-of-type(odd)": {
-            backgroundColor: theme.palette.action.hover,
-        },
-        // hide last border
-        "&:last-child td, &:last-child th": {
-            border: 0,
-        },
-    }));
+    const totalAmount = outfits?.reduce(
+        (sum, item) => sum + item.cost * item.quantity,
+        0
+    );
 
     //gsap animation
     useEffect(() => {
@@ -71,23 +99,69 @@ const HistorySection = () => {
                     <Table size="small" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell>Sl no.</StyledTableCell>
-                                <StyledTableCell>Item</StyledTableCell>
-                                <StyledTableCell>Qty</StyledTableCell>
-                                <StyledTableCell>Price</StyledTableCell>
+                                <TableCell>Sl </TableCell>
+                                <TableCell>Image</TableCell>
+                                <TableCell>Item</TableCell>
+                                <TableCell>Qty</TableCell>
+                                <TableCell>Price</TableCell>
+                                <TableCell>Link</TableCell>
+                                <TableCell>Action</TableCell>
                             </TableRow>
                         </TableHead>
 
                         <TableBody>
-                            <StyledTableRow>
-                                <StyledTableCell>1</StyledTableCell>
-                                <StyledTableCell>Zipper Jacket</StyledTableCell>
-                                <StyledTableCell>2</StyledTableCell>
-                                <StyledTableCell>200</StyledTableCell>
-                            </StyledTableRow>
+                            {outfits?.map((item, index) => (
+                                <TableRow key={item.id}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell> {item.image instanceof Blob && (
+                                        <img
+                                            src={URL.createObjectURL(item.image)}
+                                            alt="outfit"
+                                            width="40"
+                                            style={{ borderRadius: 4 }}
+                                        />
+                                    )}
+                                    </TableCell>
+                                    <TableCell>{item.itemName}</TableCell>
+                                    <TableCell>{item.quantity}</TableCell>
+                                    <TableCell>{item.cost * item.quantity}</TableCell>
+                                    <TableCell>{item.link && (
+                                        <a
+                                            href={item.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{
+                                                color: "#1976d2",
+                                                fontWeight: 600,
+                                                textDecoration: "none"
+
+                                            }} ><OpenInNewIcon fontSize="small" /></a>
+                                    )}</TableCell>
+                                    <TableCell>
+                                        <Box display="flex">
+                                            <IconButton variant="outlined" size="small">  <EditIcon fontSize="small" sx={{ color: "grey" }} /></IconButton>
+                                            <IconButton variant="outlined" size="small" onClick={() => handleDelete(item.id)}>  <DeleteIcon fontSize="small" sx={{ color: "red" }} /></IconButton>
+                                        </Box>
+                                    </TableCell>
+                                </TableRow>
+
+                            ))}
+                            <TableRow>
+                                <TableCell colSpan={4} sx={{ fontWeight: 600, textAlign: "right" }}>
+                                    Total
+                                </TableCell>
+
+                                <TableCell sx={{ fontWeight: 700 }}>
+                                    {totalAmount}
+                                </TableCell>
+
+                                <TableCell colSpan={2} />
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
+
+
             </Stack>
         </Box>
     )
